@@ -37,28 +37,44 @@ export default function CategoryTemplate({
   getParents(category)
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList sortBy={sort} data-testid="sort-by-container" />
-      <div className="w-full">
-        <div className="flex flex-row mb-8 text-2xl-semi gap-4">
-          {parents &&
-            parents.map((parent) => (
-              <span key={parent.id} className="text-ui-fg-subtle">
+    <>
+      {/* Editorial category banner (brand SVG, scales crisp on any screen) */}
+      <section className="relative h-56 w-full overflow-hidden bg-neutral-950 small:h-72">
+        <img
+          src="/brand/category-banner.svg"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
+          {parents?.length > 0 && (
+            <nav className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-white/70">
+              {parents.map((parent) => (
                 <LocalizedClientLink
-                  className="mr-4 hover:text-black"
+                  key={parent.id}
                   href={`/categories/${parent.handle}`}
-                  data-testid="sort-by-link"
+                  className="transition-colors hover:text-[var(--brand-accent)]"
                 >
                   {parent.name}
                 </LocalizedClientLink>
-                /
-              </span>
-            ))}
-          <h1 data-testid="category-page-title">{category.name}</h1>
+              ))}
+            </nav>
+          )}
+          <h1
+            className="text-4xl small:text-5xl"
+            data-testid="category-page-title"
+          >
+            {category.name}
+          </h1>
         </div>
+      </section>
+
+      <div
+        className="content-container flex flex-col py-8 small:flex-row small:items-start"
+        data-testid="category-container"
+      >
+      <RefinementList sortBy={sort} data-testid="sort-by-container" />
+      <div className="w-full">
         {category.description && (
           <div className="mb-8 text-base-regular">
             <p>{category.description}</p>
@@ -92,6 +108,7 @@ export default function CategoryTemplate({
           />
         </Suspense>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

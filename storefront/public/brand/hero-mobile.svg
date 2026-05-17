@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice" role="img" aria-label="MiniParfumQueen — luxury fragrance">
+  <defs>
+    <linearGradient id="bgm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0b0a"/>
+      <stop offset="0.5" stop-color="#15110b"/>
+      <stop offset="1" stop-color="#070707"/>
+    </linearGradient>
+    <radialGradient id="bloomm" cx="0.5" cy="0.36" r="0.7">
+      <stop offset="0" stop-color="#caa15a" stop-opacity="0.42"/>
+      <stop offset="0.45" stop-color="#a9802f" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3dca0"/>
+      <stop offset="0.5" stop-color="#c79a4b"/>
+      <stop offset="1" stop-color="#8a6608"/>
+    </linearGradient>
+    <linearGradient id="glassm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6e8c4" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <filter id="grainm">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0"/>
+    </filter>
+    <radialGradient id="vigm" cx="0.5" cy="0.5" r="0.8">
+      <stop offset="0.5" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.6"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1080" height="1920" fill="url(#bgm)"/>
+  <rect width="1080" height="1920" fill="url(#bloomm)"/>
+
+  <!-- art-deco hairline frame -->
+  <g stroke="url(#goldm)" fill="none" stroke-width="1.4" opacity="0.5">
+    <rect x="48" y="48" width="984" height="1824"/>
+    <path d="M48 150 L150 48 M1032 150 L930 48 M48 1770 L150 1872 M1032 1770 L930 1872"/>
+  </g>
+
+  <!-- flacon -->
+  <g transform="translate(540 980) scale(1.35)" stroke="url(#goldm)" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M-118 -70 q0 -28 26 -28 h184 q26 0 26 28 v300 q0 40 -40 40 h-156 q-40 0 -40 -40 z" fill="url(#glassm)"/>
+    <path d="M-118 -40 h236" opacity="0.5"/>
+    <path d="M-30 -98 v-46 h60 v46"/>
+    <path d="M-38 -150 h76 v10 h-76 z" fill="url(#goldm)" opacity="0.85"/>
+    <path d="M-30 -160 q0 -52 30 -52 q30 0 30 52 z" fill="url(#goldm)" opacity="0.9"/>
+    <path d="M-86 -40 q-14 150 6 270" stroke="#f6e8c4" stroke-width="3" opacity="0.35"/>
+    <path d="M-70 96 h140 M-70 128 h140" stroke-width="1" opacity="0.45"/>
+  </g>
+
+  <path d="M250 1500 H830" stroke="url(#goldm)" stroke-width="1" opacity="0.4"/>
+
+  <rect width="1080" height="1920" fill="url(#vigm)"/>
+  <rect width="1080" height="1920" filter="url(#grainm)" opacity="0.05"/>
+</svg>

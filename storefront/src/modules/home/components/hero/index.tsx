@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { getShopFile } from "@lib/shop"
 import HeroContent from "./hero-content"
 
@@ -7,7 +6,7 @@ const Hero = () => {
   const home = (cfg as any).home || {}
   const brand = cfg.brand || {}
 
-  const desktop = home.heroImageDesktop || "/brand/hero-desktop.jpg"
+  const desktop = home.heroImageDesktop || "/brand/hero-desktop.svg"
   const mobile = home.heroImageMobile || home.heroImageDesktop || desktop
   const kicker = home.heroKicker || brand.tagline || ""
   const headline = home.heroHeadline || brand.name || "Welcome"
@@ -16,18 +15,14 @@ const Hero = () => {
 
   return (
     <section className="relative h-[100svh] w-full overflow-hidden bg-neutral-950">
-      {/* Original brand cover — kept as the signature material.
-          Slow Ken Burns drift adds life without distracting (CSS, so it
-          respects prefers-reduced-motion via the global rule). */}
-      <picture>
+      {/* Scalable SVG brand cover — infinitely crisp, ~3KB. Slow Ken Burns
+          drift (CSS; auto-disabled under prefers-reduced-motion). */}
+      <picture className="absolute inset-0">
         <source media="(max-width: 768px)" srcSet={mobile} />
-        <Image
+        <img
           src={desktop}
           alt={`${headline} — ${kicker}`}
-          fill
-          priority
-          sizes="100vw"
-          className="hero-kenburns object-cover object-center"
+          className="hero-kenburns absolute inset-0 h-full w-full object-cover object-center"
         />
       </picture>
 

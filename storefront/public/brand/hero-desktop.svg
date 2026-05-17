@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="MiniParfumQueen — luxury fragrance">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0b0a"/>
+      <stop offset="0.5" stop-color="#15110b"/>
+      <stop offset="1" stop-color="#070707"/>
+    </linearGradient>
+    <radialGradient id="bloom" cx="0.5" cy="0.34" r="0.62">
+      <stop offset="0" stop-color="#caa15a" stop-opacity="0.42"/>
+      <stop offset="0.42" stop-color="#a9802f" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3dca0"/>
+      <stop offset="0.5" stop-color="#c79a4b"/>
+      <stop offset="1" stop-color="#8a6608"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9cf94" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#e9cf94" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#e9cf94" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6e8c4" stop-opacity="0.16"/>
+      <stop offset="0.5" stop-color="#caa15a" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0"/>
+    </filter>
+    <radialGradient id="vig" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#bloom)"/>
+
+  <!-- soft light beams -->
+  <g>
+    <rect x="690" y="-40" width="120" height="1160" fill="url(#beam)" transform="rotate(7 760 540)"/>
+    <rect x="1080" y="-40" width="170" height="1160" fill="url(#beam)" transform="rotate(-6 1160 540)"/>
+  </g>
+
+  <!-- art-deco hairline frame -->
+  <g stroke="url(#gold)" fill="none" stroke-width="1.25" opacity="0.55">
+    <rect x="60" y="60" width="1800" height="960"/>
+    <rect x="74" y="74" width="1772" height="932" stroke-width="0.6" opacity="0.6"/>
+    <path d="M60 150 L150 60 M1860 150 L1770 60 M60 930 L150 1020 M1860 930 L1770 1020"/>
+  </g>
+
+  <!-- elegant line-art flacon -->
+  <g transform="translate(960 560)" stroke="url(#gold)" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <!-- body -->
+    <path d="M-118 -70 q0 -28 26 -28 h184 q26 0 26 28 v300 q0 40 -40 40 h-156 q-40 0 -40 -40 z" fill="url(#glass)"/>
+    <!-- shoulder line -->
+    <path d="M-118 -40 h236" opacity="0.5"/>
+    <!-- neck -->
+    <path d="M-30 -98 v-46 h60 v46"/>
+    <!-- collar -->
+    <path d="M-38 -150 h76 v10 h-76 z" fill="url(#gold)" opacity="0.85"/>
+    <!-- cap -->
+    <path d="M-30 -160 q0 -52 30 -52 q30 0 30 52 z" fill="url(#gold)" opacity="0.9"/>
+    <!-- highlight -->
+    <path d="M-86 -40 q-14 150 6 270" stroke="#f6e8c4" stroke-width="3" opacity="0.35"/>
+    <!-- engraved label rule -->
+    <path d="M-70 96 h140 M-70 128 h140" stroke-width="1" opacity="0.45"/>
+  </g>
+
+  <!-- thin gold ground line -->
+  <path d="M610 920 H1310" stroke="url(#gold)" stroke-width="1" opacity="0.4"/>
+
+  <rect width="1920" height="1080" fill="url(#vig)"/>
+  <rect width="1920" height="1080" filter="url(#grain)" opacity="0.05"/>
+</svg>

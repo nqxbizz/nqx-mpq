@@ -49,7 +49,21 @@ export default async function CollectionSection({
             {home.featuredSubcopy}
           </p>
         )}
-        <div className="mx-auto mt-8 h-px w-16 bg-[var(--brand-accent)]" />
+        <span
+          aria-hidden
+          className="mx-auto mt-8 block h-7 w-56"
+          style={{
+            backgroundColor: "var(--brand-accent)",
+            WebkitMaskImage: "url(/brand/divider.svg)",
+            maskImage: "url(/brand/divider.svg)",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskPosition: "center",
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+          }}
+        />
       </Reveal>
 
       {topCategories.length > 0 && (

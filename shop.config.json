@@ -31,20 +31,23 @@
       "muted": "#f6f5f3",
       "border": "#e7e5e1"
     },
-    "logo": "/brand/logo.png",
-    "favicon": "/brand/favicon.ico"
+    "logo": "/brand/logo.svg",
+    "favicon": "/brand/logo.svg"
   },
 
   "home": {
-    "_comment": "Hero is reusable: swap the images in storefront/public/brand and edit this copy.",
-    "heroImageDesktop": "/brand/hero-desktop.jpg",
-    "heroImageMobile": "/brand/hero-mobile.jpg",
+    "_comment": "All brand art is scalable SVG (crisp on any screen, tiny). Swap files in storefront/public/brand and edit this copy to re-brand.",
+    "heroImageDesktop": "/brand/hero-desktop.svg",
+    "heroImageMobile": "/brand/hero-mobile.svg",
     "heroKicker": "Maison de Parfum",
     "heroHeadline": "MiniParfumQueen",
     "heroSubcopy": "Authentic designer fragrances, curated in miniature.",
     "heroCta": "Explore the Collection",
     "featuredHeading": "The Collection",
-    "featuredSubcopy": "A curated selection from the house."
+    "featuredSubcopy": "A curated selection from the house.",
+    "categoryBanner": "/brand/category-banner.svg",
+    "sectionTexture": "/brand/texture.svg",
+    "divider": "/brand/divider.svg"
   },
 
   "features": {

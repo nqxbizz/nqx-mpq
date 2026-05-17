@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="MiniParfumQueen monogram">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3dca0"/>
+      <stop offset="0.5" stop-color="#c79a4b"/>
+      <stop offset="1" stop-color="#8a6608"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#lg)" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="256" cy="256" r="226" stroke-width="3"/>
+    <circle cx="256" cy="256" r="210" stroke-width="1.2" opacity="0.6"/>
+
+    <!-- crown (queen) -->
+    <path d="M196 150 L196 120 L226 146 L256 104 L286 146 L316 120 L316 150 Z"
+          fill="url(#lg)" stroke-width="2"/>
+    <path d="M196 150 H316" stroke-width="2"/>
+
+    <!-- serif M monogram -->
+    <path d="M180 360 V210 h14 L256 320 L318 210 h14 V360" stroke-width="14"/>
+    <path d="M168 360 h36 M308 360 h36" stroke-width="6"/>
+
+    <!-- baseline flourish -->
+    <path d="M188 398 H324" stroke-width="2" opacity="0.7"/>
+    <circle cx="256" cy="398" r="3.5" fill="url(#lg)" stroke="none"/>
+  </g>
+</svg>
