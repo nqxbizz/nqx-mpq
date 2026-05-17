@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { getShopFile } from "@lib/shop"
+import HeroContent from "./hero-content"
 
 const Hero = () => {
   const cfg = getShopFile()
@@ -15,7 +16,9 @@ const Hero = () => {
 
   return (
     <section className="relative h-[100svh] w-full overflow-hidden bg-neutral-950">
-      {/* Original brand cover — kept as the signature material */}
+      {/* Original brand cover — kept as the signature material.
+          Slow Ken Burns drift adds life without distracting (CSS, so it
+          respects prefers-reduced-motion via the global rule). */}
       <picture>
         <source media="(max-width: 768px)" srcSet={mobile} />
         <Image
@@ -24,45 +27,19 @@ const Hero = () => {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="hero-kenburns object-cover object-center"
         />
       </picture>
 
       {/* Editorial gradient for legibility */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/60" />
 
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center text-white">
-        {kicker && (
-          <p
-            className="mb-6 text-[11px] font-medium uppercase tracking-[0.45em] text-white/80"
-            style={{ fontFamily: "var(--brand-font)" }}
-          >
-            {kicker}
-          </p>
-        )}
-        <h1
-          className="text-5xl font-normal leading-[1.05] drop-shadow-sm small:text-7xl large:text-8xl"
-          style={{ letterSpacing: "0.06em" }}
-        >
-          {headline}
-        </h1>
-        {subcopy && (
-          <p
-            className="mt-6 max-w-xl text-sm font-light tracking-wide text-white/85 small:text-base"
-            style={{ fontFamily: "var(--brand-font)" }}
-          >
-            {subcopy}
-          </p>
-        )}
-
-        <a
-          href="#collection"
-          className="group mt-12 inline-flex items-center gap-3 border border-white/60 px-9 py-3.5 text-[12px] uppercase tracking-[0.28em] text-white backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-neutral-900"
-          style={{ fontFamily: "var(--brand-font)" }}
-        >
-          {cta}
-        </a>
-      </div>
+      <HeroContent
+        kicker={kicker}
+        headline={headline}
+        subcopy={subcopy}
+        cta={cta}
+      />
 
       {/* Refined scroll indicator */}
       <a

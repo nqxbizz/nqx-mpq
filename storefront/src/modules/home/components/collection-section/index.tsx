@@ -4,6 +4,7 @@ import { getShopFile } from "@lib/shop"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ProductPreview from "@modules/products/components/product-preview"
+import Reveal from "@modules/common/components/motion/reveal"
 
 // Editorial homepage section — categories strip + a curated product grid.
 // Works whether or not Medusa "collections" exist (we use categories).
@@ -36,7 +37,7 @@ export default async function CollectionSection({
       id="collection"
       className="mx-auto w-full max-w-[1500px] scroll-mt-24 px-5 py-20 small:px-10 small:py-28"
     >
-      <header className="mb-14 text-center">
+      <Reveal as="header" className="mb-14 text-center">
         <h2 className="text-3xl small:text-4xl">
           {home.featuredHeading || "The Collection"}
         </h2>
@@ -49,7 +50,7 @@ export default async function CollectionSection({
           </p>
         )}
         <div className="mx-auto mt-8 h-px w-16 bg-[var(--brand-accent)]" />
-      </header>
+      </Reveal>
 
       {topCategories.length > 0 && (
         <nav className="mb-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
@@ -67,10 +68,10 @@ export default async function CollectionSection({
       )}
 
       <ul className="grid grid-cols-2 gap-x-5 gap-y-14 small:grid-cols-3 small:gap-x-8 small:gap-y-20 large:grid-cols-4">
-        {products?.map((product) => (
-          <li key={product.id}>
+        {products?.map((product, i) => (
+          <Reveal as="li" index={i} key={product.id}>
             <ProductPreview product={product} region={region} />
-          </li>
+          </Reveal>
         ))}
       </ul>
 

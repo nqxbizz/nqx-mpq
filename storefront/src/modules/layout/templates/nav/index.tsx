@@ -8,6 +8,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 import { getShopFile } from "@lib/shop"
+import NavShell from "./nav-shell"
 
 export default async function Nav() {
   const brandName = getShopFile().brand?.name || "Shop"
@@ -18,9 +19,8 @@ export default async function Nav() {
   ])
 
   return (
-    <div className="sticky inset-x-0 top-0 z-50 group">
-      <header className="relative mx-auto h-20 border-b border-[var(--brand-border)] bg-white/85 backdrop-blur-md transition-colors duration-300">
-        <nav className="mx-auto flex h-full w-full max-w-[1500px] items-center justify-between px-5 small:px-10">
+    <NavShell>
+      <nav className="mx-auto flex h-full w-full max-w-[1500px] items-center justify-between px-5 small:px-10">
           <div className="flex h-full flex-1 basis-0 items-center">
             <div className="h-full">
               <SideMenu
@@ -75,8 +75,7 @@ export default async function Nav() {
               <CartButton />
             </Suspense>
           </div>
-        </nav>
-      </header>
-    </div>
+      </nav>
+    </NavShell>
   )
 }
