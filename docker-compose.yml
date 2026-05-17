@@ -1,0 +1,151 @@
+name: ${PROJECT_NAME:-nqx-mpq}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redisdata:/data
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "${MINIO_API_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_started
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set m http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}; do sleep 2; done;
+      mc mb -p m/${MINIO_BUCKET} || true;
+      mc anonymous set download m/${MINIO_BUCKET};
+      echo 'MinIO bucket ready';
+      "
+
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - "${ADMINER_PORT}:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      STORE_CORS: ${STOREFRONT_PUBLIC_URL},http://localhost:${STOREFRONT_PORT}
+      ADMIN_CORS: ${BACKEND_PUBLIC_URL},http://localhost:${BACKEND_PORT}
+      AUTH_CORS: ${STOREFRONT_PUBLIC_URL},${BACKEND_PUBLIC_URL},http://localhost:${STOREFRONT_PORT},http://localhost:${BACKEND_PORT}
+      BACKEND_PUBLIC_URL: ${BACKEND_PUBLIC_URL}
+      STOREFRONT_PUBLIC_URL: ${STOREFRONT_PUBLIC_URL}
+      MINIO_CONSOLE_PUBLIC_URL: ${MINIO_CONSOLE_PUBLIC_URL}
+      ADMINER_PUBLIC_URL: ${ADMINER_PUBLIC_URL}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      # S3 / MinIO file storage
+      S3_ENDPOINT: http://minio:9000
+      S3_FILE_URL: http://localhost:${MINIO_API_PORT}/${MINIO_BUCKET}
+      S3_BUCKET: ${MINIO_BUCKET}
+      S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
+      S3_REGION: us-east-1
+      # Stripe (empty -> manual provider only)
+      STRIPE_API_KEY: ${STRIPE_API_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      # Admin bootstrap
+      MEDUSA_ADMIN_EMAIL: ${MEDUSA_ADMIN_EMAIL}
+      MEDUSA_ADMIN_PASSWORD: ${MEDUSA_ADMIN_PASSWORD}
+      SHOP_CONFIG_PATH: /shop.config.json
+      RUN_DATA_MIGRATION: ${RUN_DATA_MIGRATION:-false}
+    ports:
+      - "${BACKEND_PORT}:9000"
+    volumes:
+      - ./shop.config.json:/shop.config.json:ro
+      - ./migration/data:/app/migration-data:ro
+      - shared:/shared
+
+  storefront:
+    build:
+      context: ./storefront
+      args:
+        NEXT_PUBLIC_MEDUSA_BACKEND_URL: ${BACKEND_PUBLIC_URL}
+        NEXT_PUBLIC_BASE_URL: ${STOREFRONT_PUBLIC_URL}
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_started
+    environment:
+      NODE_ENV: production
+      # Server-side (build / SSR / middleware) talks to the backend over the
+      # internal Docker network…
+      MEDUSA_BACKEND_URL: http://backend:9000
+      # …while the browser uses the public URL.
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: ${BACKEND_PUBLIC_URL}
+      NEXT_PUBLIC_BASE_URL: ${STOREFRONT_PUBLIC_URL}
+      # MinIO reached over the internal docker network; the storefront proxies
+      # /media/* here so product images work from browser AND container.
+      MEDIA_PROXY_TARGET: http://minio:9000/${MINIO_BUCKET}
+    ports:
+      - "${STOREFRONT_PORT}:8000"
+    volumes:
+      - ./shop.config.json:/shop.config.json:ro
+      - shared:/shared:ro
+      - storefront_next:/app/.next
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:
+  shared:
+  storefront_next:

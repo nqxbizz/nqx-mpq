@@ -1,0 +1,13 @@
+.env
+node_modules/
+dist/
+.medusa/
+build/
+.next/
+*.log
+# Exported MongoDB data (contains catalogue + customer emails) — never commit
+migration/data/
+migration/.image-progress.json
+volumes/
+# Yarn berry release blobs (we build with npm; avoids ~6MB bloat)
+.yarn/

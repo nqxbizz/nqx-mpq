@@ -1,0 +1,65 @@
+{
+  "_comment": "SINGLE SOURCE OF TRUTH for branding/theme. To clone this shop for a new product line: copy the whole nqx-mpq folder, edit THIS file + .env, replace brand/ images, re-run migration with new data. No other code changes needed.",
+
+  "brand": {
+    "name": "MiniParfumQueen",
+    "shortName": "MPQ",
+    "title": "MiniParfumQueen — Designer Miniature Perfumes",
+    "tagline": "Authentic designer fragrances, in miniature",
+    "description": "Curated collection of authentic designer miniature perfumes, samples and gift sets.",
+    "email": "miniparfumqueen@gmail.com",
+    "phone": "",
+    "locale": "en",
+    "currency": "EUR",
+    "currencySymbol": "€"
+  },
+
+  "theme": {
+    "fontSans": "\"Inter\", system-ui, -apple-system, sans-serif",
+    "fontHeading": "\"Playfair Display\", Georgia, serif",
+    "fontImport": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",
+    "uppercaseHeadings": true,
+    "letterSpacing": "0.12em",
+    "radius": "2px",
+    "colors": {
+      "primary": "#18181b",
+      "onPrimary": "#ffffff",
+      "background": "#ffffff",
+      "foreground": "#0a0a0a",
+      "accent": "#b8860b",
+      "accentDark": "#8a6608",
+      "muted": "#f6f5f3",
+      "border": "#e7e5e1"
+    },
+    "logo": "/brand/logo.png",
+    "favicon": "/brand/favicon.ico"
+  },
+
+  "home": {
+    "_comment": "Hero is reusable: swap the images in storefront/public/brand and edit this copy.",
+    "heroImageDesktop": "/brand/hero-desktop.jpg",
+    "heroImageMobile": "/brand/hero-mobile.jpg",
+    "heroKicker": "Maison de Parfum",
+    "heroHeadline": "MiniParfumQueen",
+    "heroSubcopy": "Authentic designer fragrances, curated in miniature.",
+    "heroCta": "Explore the Collection",
+    "featuredHeading": "The Collection",
+    "featuredSubcopy": "A curated selection from the house."
+  },
+
+  "features": {
+    "showcaseMode": true,
+    "_showcaseMode_comment": "TRUE = catalog-only: public can browse the owner's stock but prices, cart, wishlist and checkout are hidden. FALSE = full webshop. Toggleable at runtime from Admin > Shop Settings.",
+    "showcaseHidePrice": true,
+    "showcaseHideCart": true,
+    "search": true,
+    "reviews": false
+  },
+
+  "shop": {
+    "regionName": "Europe",
+    "regionCurrency": "eur",
+    "countries": ["nl", "de", "be", "fr", "pl", "hu", "at", "es", "it", "lu"],
+    "defaultCountry": "nl"
+  }
+}
