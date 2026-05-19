@@ -136,6 +136,10 @@ services:
       # MinIO reached over the internal docker network; the storefront proxies
       # /media/* here so product images work from browser AND container.
       MEDIA_PROXY_TARGET: http://minio:9000/${MINIO_BUCKET}
+      # Auth cookie Secure flag. MUST be false over plain http (e.g. local
+      # http://localhost), or browsers drop the login cookie. Set true only
+      # when the site is served over HTTPS.
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
     ports:
       - "${STOREFRONT_PORT}:8000"
     volumes:

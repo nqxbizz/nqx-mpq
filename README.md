@@ -173,6 +173,8 @@ docker compose up -d
 | Source edit not applied | `docker compose build <svc>` then `--force-recreate` (not a plain restart). |
 | Port already in use | Edit the port in `.env`, `docker compose up -d --force-recreate`. |
 | Admin login fails | Confirm `MEDUSA_ADMIN_*` in `.env`; re-run `docker compose up -d --force-recreate backend`. |
+| Admin login does nothing / spins | Stale cached admin bundle after a rebuild. Open `http://localhost:9000/app` in a private window or hard-refresh (Ctrl/Cmd+Shift+R) / clear site data. |
+| Website (customer) login doesn't stick | Auth cookie needs `COOKIE_SECURE=false` on plain http (default). Over HTTPS set it `true`. The admin account is **not** a storefront account — register a shopper account on the site. |
 
 ---
 
