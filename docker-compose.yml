@@ -108,6 +108,9 @@ services:
       MEDUSA_ADMIN_PASSWORD: ${MEDUSA_ADMIN_PASSWORD}
       SHOP_CONFIG_PATH: /shop.config.json
       RUN_DATA_MIGRATION: ${RUN_DATA_MIGRATION:-false}
+      # Admin session cookie: must be non-Secure over plain http (default).
+      # Set COOKIE_SECURE=true in .env only when serving over HTTPS.
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
     ports:
       - "${BACKEND_PORT}:9000"
     volumes:

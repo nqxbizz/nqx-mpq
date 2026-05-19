@@ -36,6 +36,17 @@ module.exports = defineConfig({
       jwtSecret: process.env.JWT_SECRET || 'supersecret',
       cookieSecret: process.env.COOKIE_SECRET || 'supersecret',
     },
+    // Medusa forces the admin session cookie to Secure+SameSite=None in
+    // production, so it is DROPPED over plain http://localhost (express-session
+    // won't even send Set-Cookie) — the admin then 401s and bounces back to
+    // the login form. cookieOptions is spread last into the session cookie,
+    // so this is the supported override. Set COOKIE_SECURE=true behind HTTPS.
+    cookieOptions: {
+      secure: process.env.COOKIE_SECURE === 'true',
+      sameSite: process.env.COOKIE_SECURE === 'true' ? 'none' : 'lax',
+      httpOnly: true,
+      maxAge: 10 * 60 * 60 * 1000,
+    },
   },
   admin: {
     backendUrl: process.env.BACKEND_PUBLIC_URL || 'http://localhost:9000',
