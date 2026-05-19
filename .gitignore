@@ -11,3 +11,6 @@ migration/.image-progress.json
 volumes/
 # Yarn berry release blobs (we build with npm; avoids ~6MB bloat)
 .yarn/
+
+# Local readable credential copy (never commit)
+CREDENTIALS.local.md
