@@ -17,6 +17,7 @@
     "seed": "medusa exec ./src/scripts/seed.ts",
     "bootstrap": "medusa exec ./src/scripts/bootstrap.ts",
     "migrate:catalogue": "medusa exec ./src/scripts/import-products.ts",
+    "backfill:quantity": "medusa exec ./src/scripts/backfill-quantity.ts",
     "start": "medusa start",
     "dev": "medusa develop",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
