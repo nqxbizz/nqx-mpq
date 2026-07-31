@@ -14,3 +14,11 @@ volumes/
 
 # Local readable credential copy (never commit)
 CREDENTIALS.local.md
+
+# Backup output (logs/dumps) — keep scripts, ignore artifacts
+backups/*.log
+backups/*.sql
+backups/*.tar.gz
+
+# Local Playwright admin CRUD test scratch (videos/screenshots/node_modules) — never push to prod
+scripts/admin-crud-test/

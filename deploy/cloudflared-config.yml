@@ -1,0 +1,31 @@
+# Cloudflare Tunnel ingress for nqx-mpq (miniparfumqueen.com)
+# Copy to ~/.cloudflared/config.yml on the host running Docker, then:
+#   cloudflared tunnel route dns mpq miniparfumqueen.com
+#   cloudflared tunnel route dns mpq www.miniparfumqueen.com
+#   cloudflared tunnel route dns mpq api.miniparfumqueen.com
+#   sudo cloudflared service install && sudo systemctl enable --now cloudflared
+#
+# Replace <TUNNEL-ID> with the id printed by `cloudflared tunnel create mpq`.
+
+tunnel: mpq
+credentials-file: /home/nqx/.cloudflared/<TUNNEL-ID>.json
+
+ingress:
+  # Public storefront
+  - hostname: miniparfumqueen.com
+    service: http://localhost:8800
+  - hostname: www.miniparfumqueen.com
+    service: http://localhost:8800
+
+  # Medusa backend: Store/Admin API + admin panel at /app
+  # Lock /app behind Cloudflare Access (Zero Trust) for admin-only entry.
+  - hostname: api.miniparfumqueen.com
+    service: http://localhost:9000
+
+  # NOTE: Adminer (8085), MinIO console (9011), Postgres, Redis are intentionally
+  # NOT exposed. Product images reach the browser via the storefront /media proxy,
+  # so MinIO needs no public hostname. Add an Access-protected hostname here only
+  # if you need remote Adminer/MinIO access.
+
+  # Catch-all (required, must be last)
+  - service: http_status:404

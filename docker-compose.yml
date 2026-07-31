@@ -95,7 +95,10 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       # S3 / MinIO file storage
       S3_ENDPOINT: http://minio:9000
-      S3_FILE_URL: http://localhost:${MINIO_API_PORT}/${MINIO_BUCKET}
+      # Public image prefix served by the backend /media proxy (src/api/media).
+      # MinIO is NOT exposed via the tunnel, so the raw localhost:<port> URL is
+      # unreachable from a remote browser and breaks admin product images.
+      S3_FILE_URL: ${BACKEND_PUBLIC_URL}/media
       S3_BUCKET: ${MINIO_BUCKET}
       S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
       S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}

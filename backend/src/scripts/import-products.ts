@@ -31,9 +31,9 @@ const CATEGORY_MAP: Record<string, string> = {
   parfume: 'Perfumes',
   gift: 'Gifts',
   gifts: 'Gifts',
-  soap: 'Soap',
+  soap: 'Soap & Powder',
   sample: 'Samples',
-  powder: 'Powder',
+  powder: 'Soap & Powder',
   soapandpowder: 'Soap & Powder',
   gold: 'Gold',
   empty: 'Other',
@@ -108,11 +108,20 @@ export default async function importProducts({ container }: ExecArgs) {
   async function mirror(srcUrl: string): Promise<string | null> {
     if (!srcUrl) return null
     if (mirrorCache[srcUrl]) return mirrorCache[srcUrl]
-    // keep the original path (e.g. productimg/xyz.jpg) as the object key
+    // keep the original path (e.g. productimg/xyz.jpg) as the object key.
+    // NOTE: the old catalogue has image URLs ending in a stray brace
+    // (…IMG_123}). new URL().pathname percent-encodes that to %7D, which
+    // then becomes a literal "%7D" in the MinIO key and breaks serving
+    // (the proxy decodes it back to "}" → 404). Decode and strip the
+    // braces so the object key is clean and URL-safe. fetch() below still
+    // uses the original srcUrl, so the brace'd GCS object resolves fine.
     let key: string
     try {
       const u = new URL(srcUrl)
-      key = u.pathname.replace(/^\/+/, '').replace(/^mpq-mern-bucket\//, '')
+      key = decodeURIComponent(u.pathname)
+        .replace(/^\/+/, '')
+        .replace(/^mpq-mern-bucket\//, '')
+        .replace(/[{}]/g, '')
     } catch {
       return null
     }

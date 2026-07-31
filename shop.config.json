@@ -53,7 +53,7 @@
   "features": {
     "showcaseMode": true,
     "_showcaseMode_comment": "TRUE = catalog-only: public can browse the owner's stock but prices, cart, wishlist and checkout are hidden. FALSE = full webshop. Toggleable at runtime from Admin > Shop Settings.",
-    "showcaseHidePrice": true,
+    "showcaseHidePrice": false,
     "showcaseHideCart": true,
     "search": true,
     "reviews": false
