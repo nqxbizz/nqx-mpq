@@ -13,11 +13,13 @@ export default function CategoryTemplate({
   category,
   sortBy,
   page,
+  searchQuery,
   countryCode,
 }: {
   category: HttpTypes.StoreProductCategory
   sortBy?: SortOptions
   page?: string
+  searchQuery?: string
   countryCode: string
 }) {
   const pageNumber = page ? parseInt(page) : 1
@@ -73,8 +75,19 @@ export default function CategoryTemplate({
         className="content-container flex flex-col py-8 small:flex-row small:items-start"
         data-testid="category-container"
       >
-      <RefinementList sortBy={sort} data-testid="sort-by-container" />
+      <RefinementList
+        sortBy={sort}
+        searchQuery={searchQuery}
+        data-testid="sort-by-container"
+      />
       <div className="w-full">
+        {searchQuery && (
+          <div className="mb-8 text-2xl-semi">
+            <h2 data-testid="category-search-title">
+              Results for “{searchQuery}” in {category.name}
+            </h2>
+          </div>
+        )}
         {category.description && (
           <div className="mb-8 text-base-regular">
             <p>{category.description}</p>
@@ -104,6 +117,7 @@ export default function CategoryTemplate({
             sortBy={sort}
             page={pageNumber}
             categoryId={category.id}
+            searchQuery={searchQuery}
             countryCode={countryCode}
           />
         </Suspense>
